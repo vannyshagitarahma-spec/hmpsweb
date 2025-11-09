@@ -1,13 +1,12 @@
 <?php
-session_start();
-
-// Pastikan admin login
-if (!isset($_SESSION['admin'])) {
-    header('Location: admin/admin_login.php'); // redirect ke halaman login admin
-    exit;
+$conn = new mysqli("localhost", "root", "", "website_db");
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
 }
-?>
 
+// Ambil data dan urutkan per divisi
+$result = $conn->query("SELECT * FROM kabinet ORDER BY FIELD(divisi,'struktur inti','internal','eksternal','iptek','psdm','business development'), id");
+?>
 <!doctype html>
 <html lang="id">
 

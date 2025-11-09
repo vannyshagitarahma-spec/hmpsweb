@@ -1,11 +1,5 @@
 <?php
 session_start();
-
-// Pastikan admin login
-if (!isset($_SESSION['admin'])) {
-    header('Location: admin/admin_login.php'); // redirect ke halaman login admin
-    exit;
-}
 ?>
 
 <!doctype html>

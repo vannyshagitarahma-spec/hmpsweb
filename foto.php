@@ -1,33 +1,18 @@
+<?php
+session_start();
+?>
+
 <!doctype html>
 <html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SEJARAH HMPS MANAJEMEN INFORMATIKA</title>
+    <title>KEGIATAN HMPS MANAJEMEN INFORMATIKA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        .sejarah-section {
-            background-color: #f1f1f1;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .sejarah-header {
-            color: #0078d7;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        .sejarah-text {
-            color: #343a40;
-            font-size: 1.1rem;
-        }
-
         .navbar {
             background-color: white;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -60,6 +45,37 @@
 
         .navbar-nav .nav-link:hover {
             color: #007bff !important;
+        }
+
+        /* Efek zoom saat hover */
+        .gallery-item img {
+            transition: transform 0.3s ease;
+            width: 100%;
+            height: 200px;
+            /* Membuat gambar persegi panjang */
+            object-fit: cover;
+            /* Menjaga proporsi gambar */
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item {
+            position: relative;
+        }
+
+        /* Judul gambar */
+        .gallery-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 5px;
+            text-align: center;
+            font-size: 14px;
         }
 
         /* === DROPDOWN ON HOVER === */
@@ -166,6 +182,7 @@
 </head>
 
 <body>
+
     <!-- === NAVBAR === -->
     <nav class="navbar navbar-expand-lg sticky-top" id="navbarTop">
         <div class="container">
@@ -189,46 +206,75 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Galeri</a>
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><b>Galeri</b></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="foto.php">Kegiatan</a></li>
                             <li><a class="dropdown-item" href="berita.php">Berita</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="sejarah.php"><b>Sejarah</b></a></li>
+                    <li class="nav-item"><a class="nav-link" href="sejarah.php">Sejarah</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="sejarah-section">
-                    <h2 class="sejarah-header">Sejarah</h2>
-                    <div class="sejarah-text">
-                        <p>HMPS-MI POLMED didirikan pada hari Sabtu tanggal 10 Mei 2008 di Gedung UPT Komputer Lantai 3 kampus Politeknik Negeri Medan Jalan Almamater No. 1 Medan, untuk waktu yang tidak ditentukan</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <P></P>
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-10">
-                <div class="sejarah-section">
-                    <h2 class="sejarah-header">Profil</h2>
-                    <div class="sejarah-text">
-                        <p>HMPS-MI POLMED merupakan organisasi kemahasiswaan yang bersifat kekeluargaan dan
-                            profesionalitas serta menjunjung tinggi kesetaraan.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <p></p>
+    <div class="row">
+        <div class="col-md-4 gallery-item mb-4">
+            <img src="galeri/excitement.jpg" alt="foto 1" class="rounded"
+                data-bs-toggle="modal" data-bs-target="#imageModal1" style="cursor: pointer;">
+        </div>
+        <div class="col-md-4 gallery-item mb-4">
+            <img src="galeri/pkkmb.jpg" alt="foto 3" class="rounded"
+                data-bs-toggle="modal" data-bs-target="#imageModal3" style="cursor: pointer;">
+        </div>
+        <div class="col-md-4 gallery-item mb-4">
+            <img src="galeri/codinglab.jpg" alt="foto 2" class="rounded"
+                data-bs-toggle="modal" data-bs-target="#imageModal2" style="cursor: pointer;">
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel1">clasmeet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="galeri/excitement.jpg" alt="foto 1" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal2" tabindex="-1" aria-labelledby="imageModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel2">Kunjungan kerja MI Explore 2025 ke Coding Lab </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="galeri/codinglab.jpg" alt="foto 2" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal3" tabindex="-1" aria-labelledby="imageModalLabel3" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel2">Awal baru, semangat baru, keluarga baru 💙
+                        Selamat datang mahasiswa/i Manajemen Informatika angkatan 2025!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="galeri/pkkmb.jpg" alt="foto 3" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- === SHARE BAR === -->
     <nav class="share-bar">
         <!-- Instagram -->
@@ -263,6 +309,7 @@
             </svg>
         </a>
     </nav>
+
     <footer style="background-color: #0078d7;" class="text-white pt-4 pb-3">
         <div class="container">
             <div class="row align-items-center text-center text-md-start">
@@ -282,7 +329,6 @@
                     <p class="mb-0">Politeknik Negeri Medan</p>
                 </div>
             </div>
-
             <hr class="border-light mt-4 mb-3">
 
             <div class="text-center small">
