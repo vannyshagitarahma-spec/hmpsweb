@@ -1,6 +1,6 @@
 <?php
 require_once "config.php";
-require_once "model/galeri.php";
+require_once "model/berita.php";
 
 // Ambil semua berita dari database
 $berita = berita_index();
@@ -13,7 +13,337 @@ $berita = berita_index();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BERITA HMPS MANAJEMEN INFORMATIKA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .gallery-container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 15px;
+        }
+
+        .gallery-card {
+            border: none;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-card img,
+        .gallery-card .slideshow img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: block;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 12px 20px;
+        }
+
+        .navbar-brand img {
+            height: 70px;
+            margin-right: 12px;
+            transition: 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-brand strong {
+            font-size: 22px;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: #333 !important;
+            margin-left: 18px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #007bff !important;
+        }
+
+        /* === DROPDOWN ON HOVER === */
+        @media (min-width: 992px) {
+            .navbar .dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0;
+            }
+
+            .dropdown-menu {
+                animation: fadeIn 0.3s ease;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand img {
+                height: 55px;
+            }
+
+            .navbar-brand strong {
+                font-size: 18px;
+            }
+        }
+
+        .custom-container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 315px;
+            border: none;
+        }
+
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+        }
+
+        .card-text {
+            font-size: 15px;
+            text-align: justify;
+            color: #333;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .selengkapnya {
+            color: #007bff;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .selengkapnya:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+        .card-date {
+            text-align: center;
+            font-style: italic;
+            color: #555;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* slideshow */
+        .slideshow {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .slideshow img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .slideshow img.active {
+            opacity: 1;
+        }
+
+        /* Modal */
+        .modal-dialog {
+            max-width: 700px;
+        }
+
+        .modal-content {
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            position: relative;
+        }
+
+        .modal-body {
+            padding: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-body img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            margin: 15px auto;
+        }
+
+        .modal-text {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            font-size: 22px;
+            line-height: 1;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.08);
+        }
+
+        /* Panah hitam biasa */
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-image: none;
+        }
+
+        .carousel-control-prev::before {
+            content: "◀";
+            color: black;
+            font-size: 2rem;
+        }
+
+        .carousel-control-next::before {
+            content: "▶";
+            color: black;
+            font-size: 2rem;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 8%;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-card img {
+                height: 160px;
+            }
+
+            .slideshow {
+                height: 160px;
+            }
+
+            .modal-body img {
+                max-width: 80%;
+            }
+        }
+
+        /* === SHARE BAR === */
+        .share-bar {
+            position: fixed;
+            top: 50%;
+            left: 8px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10000;
+            user-select: none;
+        }
+
+        .share-item {
+            width: 48px;
+            height: 48px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+            transition: transform .2s;
+        }
+
+        .share-item:hover {
+            transform: scale(1.1);
+        }
+
+        .ig {
+            background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5);
+        }
+
+        .tt {
+            background: #000;
+        }
+
+        .yt {
+            background: #FF0000;
+        }
+
+        .net {
+            background: #0078d7;
+        }
+
+        .share-item svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body>
 
     <!-- === NAVBAR === -->
     <nav class="navbar navbar-expand-lg sticky-top" id="navbarTop">

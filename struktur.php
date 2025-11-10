@@ -9,8 +9,194 @@ session_start(); ?>
     <title>STRUKTUR HMPS MANAJEMEN INFORMATIKA</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 
+  <style>
+    /* Navbar */
+    .navbar {
+      background-color: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 12px 20px;
+    }
+
+    .navbar-brand img {
+      height: 70px;
+      margin-right: 12px;
+      transition: 0.3s ease;
+    }
+
+    .navbar-brand img:hover {
+      transform: scale(1.05);
+    }
+
+    .navbar-brand strong {
+      font-size: 22px;
+      color: #333;
+      letter-spacing: 1px;
+    }
+
+    .navbar-nav .nav-link {
+      font-weight: 500;
+      color: #333 !important;
+      margin-left: 18px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #007bff !important;
+    }
+
+    @media (min-width: 992px) {
+      .navbar .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+      }
+
+      .dropdown-menu {
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar-brand img {
+        height: 55px;
+      }
+
+      .navbar-brand strong {
+        font-size: 18px;
+      }
+    }
+
+    .custom-container {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    /* === SHARE BAR === */
+    .share-bar {
+      position: fixed;
+      top: 50%;
+      left: 8px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 10000;
+      user-select: none;
+    }
+
+    .share-item {
+      width: 48px;
+      height: 48px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+      transition: transform .2s;
+    }
+
+    .share-item:hover {
+      transform: scale(1.1);
+    }
+
+    .ig {
+      background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5);
+    }
+
+    .tt {
+      background: #000;
+    }
+
+    .yt {
+      background: #FF0000;
+    }
+
+    .net {
+      background: #0078d7;
+    }
+
+    .share-item svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* === FOTO ANIMASI === */
+    .photo-card {
+      width: 300px;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      background-color: #fff;
+      margin: 50px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transform: scale(0.9);
+      animation: fadeInZoom 1s forwards;
+    }
+
+    @keyframes fadeInZoom {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .photo-card img:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 480px) {
+      .photo-card {
+        width: 90%;
+        height: 180px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg sticky-top">
