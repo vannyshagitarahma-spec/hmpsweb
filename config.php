@@ -1,29 +1,20 @@
 <?php
-// ====== KONEKSI DATABASE ======
-$host = "localhost";
-$user = "root";
-$pass = "";
-$dbname = "website_db";
+$db = new mysqli("localhost", "root", "", "website_db");
 
-// Buat koneksi
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-// Periksa koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+if ($db->connect_errno) {
+    die("Gagal koneksi database: " . $db->connect_error);
 }
 
-// ====== FUNGSI GLOBAL DATABASE ======
+// Fungsi koneksi yang benar
 function db() {
-    global $conn;
-    return $conn;
+    global $db;
+    return $db;
 }
 
-// ====== FUNGSI URL (AGAR ADMIN & PUBLIK TIDAK BERTABRAKAN) ======
+// Base URL
 function base_url($path = '') {
-    return "http://localhost/website-hmps/" . $path;
+    return "http://localhost/tes/" . $path;
 }
 
-// Lokasi folder upload
 define("UPLOAD_PATH", __DIR__ . "/uploads/");
 ?>

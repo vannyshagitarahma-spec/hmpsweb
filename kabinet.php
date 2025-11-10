@@ -2,13 +2,19 @@
 require_once "config.php";
 require_once "model/kabinet.php";
 
-$kabinet = kabinet_all();
+$result = kabinet_all();
 
-// Kelompokkan berdasarkan divisi
+if (!$result) {
+    die("QUERY ERROR: " . $db->error);
+}
+
+$kabinet = $result->fetch_all(MYSQLI_ASSOC);
+
 $per_divisi = [];
 foreach ($kabinet as $row) {
-  $per_divisi[$row['divisi']][] = $row;
+    $per_divisi[$row['divisi']][] = $row;
 }
+
 
 ?>
 <!doctype html>
@@ -317,7 +323,7 @@ foreach ($kabinet as $row) {
   </style>
 </head>
 
-<body>
+<body></body>
   <!-- === NAVBAR === -->
   <nav class="navbar navbar-expand-lg sticky-top" id="navbarTop">
     <div class="container">
@@ -806,6 +812,6 @@ foreach ($kabinet as $row) {
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
 
-</body>
+  </body>
 
 </html>

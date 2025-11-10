@@ -85,7 +85,7 @@ $sejarah = sejarah_all();
         <?php if (!empty($sejarah['isi'])): ?>
             <?php echo nl2br(htmlspecialchars($sejarah_all['isi'])); ?>
         <?php else: ?>
-            <p><i>Belum ada data sejarah.</i></p>
+            <p><i></i></p>
         <?php endif; ?>
     </div>
 

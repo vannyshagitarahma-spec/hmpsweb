@@ -9,7 +9,7 @@ session_start(); ?>
     <title>STRUKTUR HMPS MANAJEMEN INFORMATIKA</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="style.css">
   <style>
     /* Navbar */
     .navbar {
@@ -196,7 +196,7 @@ session_start(); ?>
   </style>
 </head>
 
-<body>
+<body></body>
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg sticky-top">

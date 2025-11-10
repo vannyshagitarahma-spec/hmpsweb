@@ -5,6 +5,7 @@ require_once "model/berita.php";
 // Ambil semua berita dari database
 $berita = berita_index();
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -1143,46 +1144,7 @@ $berita = berita_index();
                     </div>
                 </div>
             </div>
-            <?php include "navbar.php"; ?>
-
-            <div class="container mt-5">
-                <div class="row g-4">
-
-                    <?php foreach ($berita as $row): ?>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="card h-100 shadow-sm">
-
-                                <!-- GAMBAR -->
-                                <?php if (!empty($row['gambar'])): ?>
-                                    <img src="uploads/<?= $row['gambar'] ?>" class="card-img-top" style="height:230px; object-fit:cover;">
-                                <?php else: ?>
-                                    <img src="assets/default.jpg" class="card-img-top" style="height:230px; object-fit:cover;">
-                                <?php endif; ?>
-
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title"><?= htmlspecialchars($row['judul']) ?></h5>
-
-                                    <p class="card-text" style="flex:1;">
-                                        <?= substr(strip_tags($row['isi']), 0, 120) ?>...
-                                    </p>
-
-                                    <a href="detail_berita.php?id=<?= $row['id'] ?>"
-                                        class="btn btn-primary mt-auto">
-                                        Selengkapnya
-                                    </a>
-                                </div>
-
-                                <div class="card-footer text-muted text-center">
-                                    <?= date("d M Y", strtotime($row['tanggal'])) ?>
-                                </div>
-
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-
-                </div>
-            </div>
-
+            
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -1211,33 +1173,33 @@ $berita = berita_index();
             </script>
 
 
-            </body>
-            <footer style="background-color: #0078d7;" class="text-white pt-4 pb-3">
-                <div class="container">
-                    <div class="row align-items-center text-center text-md-start">
-                        <!-- BAGIAN KIRI: LOGO -->
-                        <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center justify-content-md-start flex-wrap gap-3">
-                            <img src="logo/LOGO POLMED.png" alt="Logo Polmed" class="img-fluid" style="max-width: 90px;">
-                            <img src="logo/LOGO PROGRAM STUDI MI.png" alt="Logo Prodi MI" class="img-fluid" style="max-width: 90px;">
-                            <img src="logo/LOGO HIMPUNAN PROGRAM STUDI MANAJEMEN INFORMATIKA.png" alt="Logo HMPS MI" class="img-fluid" style="max-width: 90px;">
-                        </div>
+</body>
+<footer style="background-color: #0078d7;" class="text-white pt-4 pb-3">
+    <div class="container">
+        <div class="row align-items-center text-center text-md-start">
+            <!-- BAGIAN KIRI: LOGO -->
+            <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center justify-content-md-start flex-wrap gap-3">
+                <img src="logo/LOGO POLMED.png" alt="Logo Polmed" class="img-fluid" style="max-width: 90px;">
+                <img src="logo/LOGO PROGRAM STUDI MI.png" alt="Logo Prodi MI" class="img-fluid" style="max-width: 90px;">
+                <img src="logo/LOGO HIMPUNAN PROGRAM STUDI MANAJEMEN INFORMATIKA.png" alt="Logo HMPS MI" class="img-fluid" style="max-width: 90px;">
+            </div>
 
-                        <!-- BAGIAN KANAN: TEKS -->
-                        <div class="col-md-6 text-center text-md-end">
-                            <h6 class="fw-bold mb-1">Official Account</h6>
-                            <p class="mb-0">HMPS Manajemen Informatika</p>
-                            <p class="mb-0">Politeknik Negeri Medan</p>
-                            <p class="mb-0">Jl. Almamater No.1 Gedung N Lt.2</p>
-                            <p class="mb-0">Politeknik Negeri Medan</p>
-                        </div>
-                    </div>
+            <!-- BAGIAN KANAN: TEKS -->
+            <div class="col-md-6 text-center text-md-end">
+                <h6 class="fw-bold mb-1">Official Account</h6>
+                <p class="mb-0">HMPS Manajemen Informatika</p>
+                <p class="mb-0">Politeknik Negeri Medan</p>
+                <p class="mb-0">Jl. Almamater No.1 Gedung N Lt.2</p>
+                <p class="mb-0">Politeknik Negeri Medan</p>
+            </div>
+        </div>
 
-                    <hr class="border-light mt-4 mb-3">
+        <hr class="border-light mt-4 mb-3">
 
-                    <div class="text-center small">
-                        &copy; 2025 Himpunan Mahasiswa Program Studi Manajemen Informatika - POLMED
-                    </div>
-                </div>
-            </footer>
+        <div class="text-center small">
+            &copy; 2025 Himpunan Mahasiswa Program Studi Manajemen Informatika - POLMED
+        </div>
+    </div>
+</footer>
 
 </html>
