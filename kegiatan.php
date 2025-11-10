@@ -1,18 +1,21 @@
+<?php
+require_once __DIR__ . '/config.php';
+
+$db = db();
+$kegiatan = $db->query("SELECT * FROM kegiatan ORDER BY id DESC");
+?>
 <!doctype html>
 <html lang="id">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WEBSITE HMPS MANAJEMEN INFORMATIKA</title>
+    <title>KEGIATAN HMPS MANAJEMEN INFORMATIKA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
     <!-- === NAVBAR === -->
-    <nav class="navbar navbar-expand-lg fixed-top" id="navbarTop">
+    <nav class="navbar navbar-expand-lg sticky-top" id="navbarTop">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
                 <img src="logo/LOGO_HIMPUNAN_PROGRAM_STUDI_MANAJEMEN_INFORMATIKA-removebg-preview.png" alt="Logo HMPS MI"
@@ -24,7 +27,7 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link active" href="index.php"><b>Beranda</b></a></li>
+                    <li class="nav-item"><a class="nav-link active" href="index.php">Beranda</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Profil</a>
                         <ul class="dropdown-menu">
@@ -34,7 +37,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Galeri</a>
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"><b>Galeri</b></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="kegiatan.php">Kegiatan</a></li>
                             <li><a class="dropdown-item" href="berita.php">Berita</a></li>
@@ -45,14 +48,95 @@
             </div>
         </div>
     </nav>
-
-    <!-- === HERO === -->
-    <section class="hero" id="home">
-        <div class="hero-content" data-aos="fade-up">
-            <h1>HIMPUNAN MAHASISWA PROGRAM STUDI MANAJEMEN INFORMATIKA POLMED</h1>
-            <p>#BERKEMBANG BERSAMA MI MENJADI YANG TERBAIK</p>
+    <p></p>
+    <div class="row">
+        <div class="col-md-4 gallery-item mb-4">
+            <img src="galeri/excitement.jpg" alt="foto 1" class="rounded"
+                data-bs-toggle="modal" data-bs-target="#imageModal1" style="cursor: pointer;">
         </div>
-    </section>
+        <div class="col-md-4 gallery-item mb-4">
+            <img src="galeri/pkkmb.jpg" alt="foto 3" class="rounded"
+                data-bs-toggle="modal" data-bs-target="#imageModal3" style="cursor: pointer;">
+        </div>
+        <div class="col-md-4 gallery-item mb-4">
+            <img src="galeri/codinglab.jpg" alt="foto 2" class="rounded"
+                data-bs-toggle="modal" data-bs-target="#imageModal2" style="cursor: pointer;">
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal1" tabindex="-1" aria-labelledby="imageModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel1">clasmeet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="galeri/excitement.jpg" alt="foto 1" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal2" tabindex="-1" aria-labelledby="imageModalLabel2" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel2">Kunjungan kerja MI Explore 2025 ke Coding Lab </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="galeri/codinglab.jpg" alt="foto 2" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="imageModal3" tabindex="-1" aria-labelledby="imageModalLabel3" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel2">Awal baru, semangat baru, keluarga baru 💙
+                        Selamat datang mahasiswa/i Manajemen Informatika angkatan 2025!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="galeri/pkkmb.jpg" alt="foto 3" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="row">
+            <?php foreach ($kegiatan as $row): ?>
+                <div class="col-md-4 gallery-item mb-4">
+                    <img src="uploads/<?= $row['gambar'] ?>"
+                        class="rounded"
+                        style="width:100%; height:200px; object-fit:cover; cursor:pointer"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modal<?= $row['id'] ?>">
+                    <div class="gallery-title"><?= $row['judul'] ?></div>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modal<?= $row['id'] ?>" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><?= $row['judul'] ?></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="uploads/<?= $row['gambar'] ?>" class="img-fluid">
+                                <p class="mt-3"><?= $row['deskripsi'] ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
 
     <!-- === SHARE BAR === -->
     <nav class="share-bar">
@@ -89,63 +173,6 @@
         </a>
     </nav>
 
-    <!-- === KONTEN FOTO SELAMAT DATANG === -->
-    <div class="container mt-5 pt-5" data-aos="fade-right">
-        <div class="row align-items-center">
-            <!-- FOTO KIRI -->
-            <div class="col-md-5 mb-3 d-flex justify-content-center" data-aos="zoom-in">
-                <img src="logo/unggul.jpg" alt="Foto HMPS MI"
-                    class="img-fluid rounded shadow-sm"
-                    style="max-width: 400px; height: auto;">
-            </div>
-
-            <!-- TEKS KANAN -->
-            <div class="col-md-7" data-aos="fade-left">
-                <p class="mb-1">
-                    <b><span style="color:#0078d7;">SELAMAT DATANG DI PORTAL RESMI HMPS MI POLMED</span></b>
-                </p>
-                <h2 class="fw-bold mb-3">MANAJEMEN INFORMATIKA</h2>
-                <p class="text-secondary">
-                    Merupakan sarana bagi mahasiswa dan mahasiswi Program Studi Manajemen Informatika untuk bersatu,
-                    berkolaborasi, serta menggelar berbagai kegiatan yang mencakup aspek akademis maupun non-akademis.
-                </p>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- === MENU === -->
-    <section class="menu-section" data-aos="fade-up">
-        <h2>STRUKTUR HIMPUNAN MAHASISWA PRODI MANAJEMEN INFORMATIKA</h2>
-        <div class="menu-container">
-            <a href="kabinet.php#opsi1" class="menu-card" data-aos="zoom-in">
-                <img src="logo/LOGO KABINET UTAMA.png" alt="kabinet Evolutionnaire">
-                <p>STRUKTUR INTI</p>
-            </a>
-            <a href="kabinet.php#opsi2" class="menu-card" data-aos="zoom-in" data-aos-delay="100">
-                <img src="logo/DIVISI EKSTERNAL.png" alt="divisi eksternal">
-                <p>DIVISI EKSTERNAL</p>
-            </a>
-            <a href="kabinet.php#opsi3" class="menu-card" data-aos="zoom-in" data-aos-delay="200">
-                <img src="logo/DIVISI INTERNAL.png" alt="divisi internal">
-                <p>DIVISI INTERNAL</p>
-            </a>
-            <div class="menu-container">
-                <a href="kabinet.php#opsi4" class="menu-card" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="logo/DIVISI IPTEK.png" alt="divisi iptek">
-                    <p>DIVISI IPTEK</p>
-                </a>
-                <a href="kabinet.php#opsi5" class="menu-card" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="logo/DIVISI PSDM.png" alt="divisi psdm">
-                    <p>DIVISI PSDM</p>
-                </a>
-                <a href="kabinet.php#opsi6" class="menu-card" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="logo/DIVISI BISNIS DEVELOPMENT.png" alt="divisi bisnis development">
-                    <p>DIVISI BUSINES DEVELOPMENT</p>
-                </a>
-            </div>
-    </section>
-
     <footer style="background-color: #0078d7;" class="text-white pt-4 pb-3">
         <div class="container">
             <div class="row align-items-center text-center text-md-start">
@@ -165,7 +192,6 @@
                     <p class="mb-0">Politeknik Negeri Medan</p>
                 </div>
             </div>
-
             <hr class="border-light mt-4 mb-3">
 
             <div class="text-center small">
@@ -190,6 +216,6 @@
             }, 800);
         });
     </script>
-</body>
+    </body>
 
 </html>

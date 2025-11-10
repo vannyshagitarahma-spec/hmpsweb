@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once "config.php";
+require_once "model/sejarah.php";
+
+$sejarah = sejarah_get();
+
+?>
+
+
 <!doctype html>
 <html lang="id">
 
@@ -7,165 +17,8 @@
     <title>SEJARAH HMPS MANAJEMEN INFORMATIKA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
-    <style>
-        .sejarah-section {
-            background-color: #f1f1f1;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .sejarah-header {
-            color: #0078d7;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 30px;
-        }
-
-        .sejarah-text {
-            color: #343a40;
-            font-size: 1.1rem;
-        }
-
-        .navbar {
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            padding: 12px 20px;
-        }
-
-        .navbar-brand img {
-            height: 70px;
-            margin-right: 12px;
-            transition: 0.3s ease;
-        }
-
-        .navbar-brand img:hover {
-            transform: scale(1.05);
-        }
-
-        .navbar-brand strong {
-            font-size: 22px;
-            color: #333;
-            letter-spacing: 1px;
-        }
-
-        .navbar-nav .nav-link {
-            font-weight: 500;
-            color: #333 !important;
-            margin-left: 18px;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: #007bff !important;
-        }
-
-        /* === DROPDOWN ON HOVER === */
-        @media (min-width: 992px) {
-            .navbar .dropdown:hover .dropdown-menu {
-                display: block;
-                margin-top: 0;
-            }
-
-            .dropdown-menu {
-                animation: fadeIn 0.3s ease;
-            }
-
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar-brand img {
-                height: 55px;
-            }
-
-            .navbar-brand strong {
-                font-size: 18px;
-            }
-        }
-
-        .custom-container {
-            background-color: #f0f0f0;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 315px;
-            border: none;
-        }
-
-        /* === SHARE BAR === */
-        .share-bar {
-            position: fixed;
-            top: 50%;
-            left: 8px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 10000;
-            user-select: none;
-        }
-
-        .share-item {
-            width: 48px;
-            height: 48px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
-            transition: transform .2s;
-        }
-
-        .share-item:hover {
-            transform: scale(1.1);
-        }
-
-        .ig {
-            background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5);
-        }
-
-        .tt {
-            background: #000;
-        }
-
-        .yt {
-            background: #FF0000;
-        }
-
-        .net {
-            background: #0078d7;
-        }
-
-        .share-item svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
-</head>
-
-<body>
     <!-- === NAVBAR === -->
     <nav class="navbar navbar-expand-lg sticky-top" id="navbarTop">
         <div class="container">
@@ -191,7 +44,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Galeri</a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="foto.php">Kegiatan</a></li>
+                            <li><a class="dropdown-item" href="kegiatan.php">Kegiatan</a></li>
                             <li><a class="dropdown-item" href="berita.php">Berita</a></li>
                         </ul>
                     </li>
@@ -228,6 +81,10 @@
             </div>
         </div>
     </div>
+    <div class="sejarah-text">
+        <?= nl2br(htmlspecialchars($sejarah['isi'])) ?>
+    </div>
+
     <p></p>
     <!-- === SHARE BAR === -->
     <nav class="share-bar">
@@ -307,6 +164,6 @@
             }, 800);
         });
     </script>
-</body>
+    </body>
 
 </html>

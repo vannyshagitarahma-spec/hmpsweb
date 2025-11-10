@@ -1,11 +1,15 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "website_db");
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
+require_once "config.php";
+require_once "model/kabinet.php";
+
+$kabinet = kabinet_all();
+
+// Kelompokkan berdasarkan divisi
+$per_divisi = [];
+foreach ($kabinet as $row) {
+  $per_divisi[$row['divisi']][] = $row;
 }
 
-// Ambil data dan urutkan per divisi
-$result = $conn->query("SELECT * FROM kabinet ORDER BY FIELD(divisi,'struktur inti','internal','eksternal','iptek','psdm','business development'), id");
 ?>
 <!doctype html>
 <html lang="en">
@@ -339,7 +343,7 @@ $result = $conn->query("SELECT * FROM kabinet ORDER BY FIELD(divisi,'struktur in
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Galeri</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="foto.php">Kegiatan</a></li>
+              <li><a class="dropdown-item" href="kegiatan.php">Kegiatan</a></li>
               <li><a class="dropdown-item" href="berita.php">Berita</a></li>
             </ul>
           </li>
@@ -383,425 +387,424 @@ $result = $conn->query("SELECT * FROM kabinet ORDER BY FIELD(divisi,'struktur in
       </svg>
     </a>
   </nav>
-      <section id="opsi1">
-        <h1 style="color: #4fb2d9;"><b>STRUKTUR INTI</b></h1>
-        <hr class="garis-tebal">
+  <section id="opsi1">
+    <h1 style="color: #4fb2d9;"><b>STRUKTUR INTI</b></h1>
+    <hr class="garis-tebal">
 
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/alifa-qadri.jpg" alt="alifa qadri"
-              style="border-radius:15px 25px 0 0;box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Alifa Qadri</h3>
-            <p class="title">KETUA HIMPUNAN</p>
-          </div>
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/alifa-qadri.jpg" alt="alifa qadri"
+          style="border-radius:15px 25px 0 0;box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Alifa Qadri</h3>
+        <p class="title">KETUA HIMPUNAN</p>
+      </div>
 
-          <div class="profile-card">
-            <img src="foto/m-hafizh-batu-bara.jpg" alt="m hafizh batu bara" style="border-radius:15px 25px 0 0;
+      <div class="profile-card">
+        <img src="foto/m-hafizh-batu-bara.jpg" alt="m hafizh batu bara" style="border-radius:15px 25px 0 0;
         box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Muhammad Hafizh Batu Bara</h3>
-            <p class="title">WAKIL KETUA HIMPUNAN</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/mauliza-azizah.jpg" alt="mauliza azizah style=" border-radius:15px 25px 0 0; box-shadow:0px 0px
-              15px -2px rgba(0,0,0,0.4);">
-            <h3>Mauliza Azizah</h3>
-            <p class="title">SEKRETARIS</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/syafitri-uswatun.jpg" alt="syafitri uswatun" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Syafitri Uswatun</h3>
-            <p class="title">WAKIL SEKRETARIS</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/amira-nadhifa-n.jpg" alt="amira nadhifa" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Amira Nadhifa</h3>
-            <p class="title">BENDAHARA</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/umi-nurfadilah-s.jpg" alt="umi nurfadilah s" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Umi Nurfadilah S.</h3>
-            <p class="title">WAKIL BENDAHARA</p>
-          </div>
-
-          <div class="container">
-            <div class="profile-card">
-              <img src="foto/m-ibnu-tawakal.jpg" alt="m ibnu tawakal" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-              <h3>Muhammad Ibnu Tawakal</h3>
-              <p class="title">KONTROL INTERNAL</p>
-            </div>
-
-            <div class="profile-card">
-              <img src="foto/mariska-siagian.jpg" alt="mariska siagian" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-              <h3>Mariska Siagian</h3>
-              <p class="title">KONTROL INTERNAL</p>
-            </div>
-          </div>
-      </section>
-      <section id="opsi2">
-        <h1 style="color: #4fb2d9;"><b>DIVISI INTERNAL</b></h1>
-        <hr class="garis-tebal">
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/zaky-farhan-sitorus.jpg" alt="zaky farhan sitorus" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Zaky Farhan Sitorus</h3>
-            <p class="title">KEPALA DIVISI INTERNAL</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/lettyciya-laura-siagian.jpg" alt="lettyciya laura siagian" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>lettyciya Laura Siagian</h3>
-            <p class="title">KETUA TIM KEAGAMAAN</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/egi-syahputra.jpg" alt="egi syahputra" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Egi Syahputra</h3>
-            <p class="title">ANGGOTA TIM KEAGAMAAN</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/chrisandy-hutabarat.jpg" alt="chrisandy hutabarat" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Chrisandy Hutabarat</h3>
-            <p class="title">KETUA TIM ADVOKASI HUBUNGAN MAHASISWA</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/holikristin-br-ginting.jpg" alt="holikristin br ginting" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Holikristin BR Ginting</h3>
-            <p class="title">ANGGOTA TIM ADVOKASI HUBUNGAN MAHASISWA</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/johannes-mario-rafael-sibarani.jpg" alt="johannes mario rafael sibarani" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>johannes Mario Rafael Sibarani</h3>
-            <p class="title">ANGGOTA TIM ADVOKASI HUBUNGAN MAHASISWA</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/tri-septian-tarigan.jpg" alt="tri septian tarigan " style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Tri Septian Tarigan</h3>
-            <p class="title">ANGGOTA TIM ADVOKASI HUBUNGAN MAHASISWA</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="opsi3">
-        <h1 style="color: #4fb2d9;"><b>DIVISI EKSTERNAL</b></h1>
-        <hr class="garis-tebal">
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/bima-shakti.jpg" alt="bima shakti" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Bima Shakti</h3>
-            <p class="title">KETUA DIVISI EKSTERNAL</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/tongku-guru-s.jpg" alt="tongku guru s" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Tongku Guru S.</h3>
-            <p class="title">KETUA TIM HUBUNGAN LUAR PRODI</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/dwika-br-naibaho.jpg" alt="dwika br naibaho" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Dwika BR Naibaho</h3>
-            <p class="title">ANGGOTA TIM HUBUNGAN LUAR PRODI</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/m-hilmi-syuhada.jpg" alt="m hilmi syuhada" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Muhammad Hilmi Syuhada/h3>
-              <p class="title">ANGGOTA TIM HUBUNGAN LUAR PRODI</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/m-rizky-ramadhan.jpg" alt="m rizky ramadhan" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Muhammad Rizky Ramadhan</h3>
-            <p class="title">ANGGOTA TIM HUBUNGAN LUAR PRODI</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/dita-liana.jpg" alt="dita liana" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Dita Liana</h3>
-            <p class="title">KETUA TIM RISET ANALIS</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/sindy-syahfitri.jpg" alt="sindy syahfitri" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Sindy Syahfitri</h3>
-            <p class="title">ANGGOTA TIM RISET ANALIS</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="opsi4">
-        <h1 style="color: #4fb2d9;"><b>DIVISI IPTEK</b></h1>
-        <hr class="garis-tebal">
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/rendy-krisna.jpg" alt="rendy-krisna" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Rendy Krisna</h3>
-            <p class="title">KEPALA DIVISI IPTEK</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/hatta-fahriza.jpg" alt="hatta-fahriza" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Hatta fahriza</h3>
-            <p class="title">KETUA TIM CONTENT CREATOR</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/silvika-zachry.jpg" alt="silvika-zachry" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Silvika Zachry</h3>
-            <p class="title">ANGGOTA TIM CONTENT CREATOR</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/sukma-andini.jpg" alt="sukma andini" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Sukma Andini</h3>
-            <p class="title">ANGGOTA TIM CONTENT CREATOR</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/randy-karna.jpg" alt="randy karna" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Randy Karna</h3>
-            <p class="title">KETUA TIM MULTIMEDIA</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/dedy-hutahean-p.jpg" alt="dedy-hutahean-p" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Dedy Hutahean P.</h3>
-            <p class="title">ANGGOTA TIM MULTIMEDIA</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/may-helena-tamba.jpg" alt="may helena tamba" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>May Helena Tamba</h3>
-            <p class="title">ANGGOTA TIM MULTIMEDIA</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/sekarissa-ramadhani.jpg" alt="sekarissa-ramadhani" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Sekarissa Ramadhani</h3>
-            <p class="title">ANGGOTA TIM MULTIMEDIA</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="opsi5">
-        <h1 style="color: #4fb2d9;"><b>DIVISI PSDM</b></h1>
-        <hr class="garis-tebal">
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/gilbert-tamba.jpg" alt="gilbert-tamba" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Gilbert Tamba</h3>
-            <p class="title">KEPALA DIVISI PSDM</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/valencia-anbarina.jpg" alt="valencia-anbarina" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Valencia Anbarina</h3>
-            <p class="title">KETUA TIM PROGRAM</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/clara-sinta-limbong.jpg" alt="clara-sinta-limbong" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Clara Sinta Limbong</h3>
-            <p class="title">ANGGOTA TIM PROGRAM</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/rahkmadsyah-irawan.jpg" alt="rahkmadsyah-irawan" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Rahkmadsyah Irawan</h3>
-            <p class="title">ANGGOTA TIM PROGRAM</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/hanna-pati-lopian.jpg" alt="hanna-pati-lopian" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Hanna Pati Lopian</h3>
-            <p class="title">KETUA TIM QUALITY ASSURANCE</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/rachel-sagita-sibarani.jpg" alt="rachel-sagita-sibarani" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Rachel Sagita Sibarani</h3>
-            <p class="title">ANGGOTA TIM QUALITY ASSURANCE</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/shindy-aprilia.jpg" alt="shindy-aprilia" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Sindy Aprilia</h3>
-            <p class="title">ANGGOTA TIM QUALITY ASSURANCE</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="opsi6">
-        <h1 style="color: #4fb2d9;"><b>DIVISI BUSINESS DEVELOPMENT</b></h1>
-        <hr class="garis-tebal">
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/riah-ulina-hutasoit.jpg" alt="riah-ulina-hutasoit" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Riah Ulina Hutasoit</h3>
-            <p class="title">KEPALA DIVISI BUSSINES DEVELOPMENT</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/putri-anggreini.jpg" alt="putri-anggreini" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Putri Anggreini</h3>
-            <p class="title">MANAGER</p>
-          </div>
-        </div>
-
-        <div class="container">
-          <div class="profile-card">
-            <img src="foto/hepyana-daulay.jpg" alt="hepyana-daulay" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Hepyana Daulay</h3>
-            <p class="title">KETUA TIM PRODUCEY DEVELOPMENT</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/fensia-emanuela.jpg" alt="fensia-emanuela" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Fensia Emanuela</h3>
-            <p class="title">ANGGOTA TIM PRODUKEY DEVELOPMENT</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/kyla-hulwani.jpg" alt="kyla-hulwani" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Kyla Hulwani</h3>
-            <p class="title">ANGGOTA TIM PRODUKEY DEVELOPMENT</p>
-          </div>
-
-          <div class="profile-card">
-            <img src="foto/musbar-muliansyah.jpg" alt="musbar-muliansyah" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-            <h3>Musbar Muliansyah</h3>
-            <p class="title">ANGGOTA TIM PRODUKEY DEVELOPMENT</p>
-          </div>
-
-          <div class="container">
-            <div class="profile-card">
-              <img src="foto/yohana-fransiska.jpg" alt="yohana-fransiska" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-              <h3>Yohana Fransiska</h3>
-              <p class="title">KETUA TIM SALES</p>
-            </div>
-
-            <div class="profile-card">
-              <img src="foto/nabila-azzahro.jpg" alt="nabila-azzahro" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-              <h3>Nabila Azzahro</h3>
-              <p class="title">ANGGOTA TIM SALES</p>
-            </div>
-            <div class="profile-card">
-              <img src="foto/nurul-inayah.jpg" alt="nurul-inayah" style="border-radius:15px 25px 0 0;
-        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
-              <h3>Nurul Inayah</h3>
-              <p class="title">ANGGOTA TIM SALES</p>
-            </div>
-          </div>
-      </section>
-<?php
-$currentDivisi = '';
-while($row = $result->fetch_assoc()):
-    if ($currentDivisi != $row['divisi']):
-        $currentDivisi = $row['divisi'];
-        echo "<h2>" . ucfirst($currentDivisi) . "</h2><div class='anggota'>";
-    endif;
-?>
-    <div class="card">
-        <?php if($row['foto'] != ""): ?>
-            <img src="<?= $row['foto'] ?>" alt="<?= $row['nama'] ?>">
-        <?php endif; ?>
-        <h4><?= $row['nama'] ?></h4>
-        <p><?= $row['jabatan'] ?></p>
+        <h3>Muhammad Hafizh Batu Bara</h3>
+        <p class="title">WAKIL KETUA HIMPUNAN</p>
+      </div>
     </div>
-<?php
-    // Tutup div anggota saat divisi berubah atau di akhir
-    $peek = $result->fetch_assoc();
-    if(!$peek || $peek['divisi'] != $currentDivisi) echo "</div>";
-    if($peek) $result->data_seek($result->current_field); // kembalikan pointer
-endwhile;
-?>
 
-</body>
-</html>
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/mauliza-azizah.jpg" alt="mauliza azizah style=" border-radius:15px 25px 0 0; box-shadow:0px 0px
+          15px -2px rgba(0,0,0,0.4);">
+        <h3>Mauliza Azizah</h3>
+        <p class="title">SEKRETARIS</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/syafitri-uswatun.jpg" alt="syafitri uswatun" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Syafitri Uswatun</h3>
+        <p class="title">WAKIL SEKRETARIS</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/amira-nadhifa-n.jpg" alt="amira nadhifa" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Amira Nadhifa</h3>
+        <p class="title">BENDAHARA</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/umi-nurfadilah-s.jpg" alt="umi nurfadilah s" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Umi Nurfadilah S.</h3>
+        <p class="title">WAKIL BENDAHARA</p>
+      </div>
+
+      <div class="container">
+        <div class="profile-card">
+          <img src="foto/m-ibnu-tawakal.jpg" alt="m ibnu tawakal" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+          <h3>Muhammad Ibnu Tawakal</h3>
+          <p class="title">KONTROL INTERNAL</p>
+        </div>
+
+        <div class="profile-card">
+          <img src="foto/mariska-siagian.jpg" alt="mariska siagian" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+          <h3>Mariska Siagian</h3>
+          <p class="title">KONTROL INTERNAL</p>
+        </div>
+      </div>
+  </section>
+  <section id="opsi2">
+    <h1 style="color: #4fb2d9;"><b>DIVISI INTERNAL</b></h1>
+    <hr class="garis-tebal">
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/zaky-farhan-sitorus.jpg" alt="zaky farhan sitorus" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Zaky Farhan Sitorus</h3>
+        <p class="title">KEPALA DIVISI INTERNAL</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/lettyciya-laura-siagian.jpg" alt="lettyciya laura siagian" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>lettyciya Laura Siagian</h3>
+        <p class="title">KETUA TIM KEAGAMAAN</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/egi-syahputra.jpg" alt="egi syahputra" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Egi Syahputra</h3>
+        <p class="title">ANGGOTA TIM KEAGAMAAN</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/chrisandy-hutabarat.jpg" alt="chrisandy hutabarat" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Chrisandy Hutabarat</h3>
+        <p class="title">KETUA TIM ADVOKASI HUBUNGAN MAHASISWA</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/holikristin-br-ginting.jpg" alt="holikristin br ginting" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Holikristin BR Ginting</h3>
+        <p class="title">ANGGOTA TIM ADVOKASI HUBUNGAN MAHASISWA</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/johannes-mario-rafael-sibarani.jpg" alt="johannes mario rafael sibarani" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>johannes Mario Rafael Sibarani</h3>
+        <p class="title">ANGGOTA TIM ADVOKASI HUBUNGAN MAHASISWA</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/tri-septian-tarigan.jpg" alt="tri septian tarigan " style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Tri Septian Tarigan</h3>
+        <p class="title">ANGGOTA TIM ADVOKASI HUBUNGAN MAHASISWA</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="opsi3">
+    <h1 style="color: #4fb2d9;"><b>DIVISI EKSTERNAL</b></h1>
+    <hr class="garis-tebal">
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/bima-shakti.jpg" alt="bima shakti" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Bima Shakti</h3>
+        <p class="title">KETUA DIVISI EKSTERNAL</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/tongku-guru-s.jpg" alt="tongku guru s" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Tongku Guru S.</h3>
+        <p class="title">KETUA TIM HUBUNGAN LUAR PRODI</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/dwika-br-naibaho.jpg" alt="dwika br naibaho" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Dwika BR Naibaho</h3>
+        <p class="title">ANGGOTA TIM HUBUNGAN LUAR PRODI</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/m-hilmi-syuhada.jpg" alt="m hilmi syuhada" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Muhammad Hilmi Syuhada/h3>
+          <p class="title">ANGGOTA TIM HUBUNGAN LUAR PRODI</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/m-rizky-ramadhan.jpg" alt="m rizky ramadhan" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Muhammad Rizky Ramadhan</h3>
+        <p class="title">ANGGOTA TIM HUBUNGAN LUAR PRODI</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/dita-liana.jpg" alt="dita liana" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Dita Liana</h3>
+        <p class="title">KETUA TIM RISET ANALIS</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/sindy-syahfitri.jpg" alt="sindy syahfitri" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Sindy Syahfitri</h3>
+        <p class="title">ANGGOTA TIM RISET ANALIS</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="opsi4">
+    <h1 style="color: #4fb2d9;"><b>DIVISI IPTEK</b></h1>
+    <hr class="garis-tebal">
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/rendy-krisna.jpg" alt="rendy-krisna" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Rendy Krisna</h3>
+        <p class="title">KEPALA DIVISI IPTEK</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/hatta-fahriza.jpg" alt="hatta-fahriza" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Hatta fahriza</h3>
+        <p class="title">KETUA TIM CONTENT CREATOR</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/silvika-zachry.jpg" alt="silvika-zachry" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Silvika Zachry</h3>
+        <p class="title">ANGGOTA TIM CONTENT CREATOR</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/sukma-andini.jpg" alt="sukma andini" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Sukma Andini</h3>
+        <p class="title">ANGGOTA TIM CONTENT CREATOR</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/randy-karna.jpg" alt="randy karna" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Randy Karna</h3>
+        <p class="title">KETUA TIM MULTIMEDIA</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/dedy-hutahean-p.jpg" alt="dedy-hutahean-p" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Dedy Hutahean P.</h3>
+        <p class="title">ANGGOTA TIM MULTIMEDIA</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/may-helena-tamba.jpg" alt="may helena tamba" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>May Helena Tamba</h3>
+        <p class="title">ANGGOTA TIM MULTIMEDIA</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/sekarissa-ramadhani.jpg" alt="sekarissa-ramadhani" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Sekarissa Ramadhani</h3>
+        <p class="title">ANGGOTA TIM MULTIMEDIA</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="opsi5">
+    <h1 style="color: #4fb2d9;"><b>DIVISI PSDM</b></h1>
+    <hr class="garis-tebal">
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/gilbert-tamba.jpg" alt="gilbert-tamba" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Gilbert Tamba</h3>
+        <p class="title">KEPALA DIVISI PSDM</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/valencia-anbarina.jpg" alt="valencia-anbarina" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Valencia Anbarina</h3>
+        <p class="title">KETUA TIM PROGRAM</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/clara-sinta-limbong.jpg" alt="clara-sinta-limbong" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Clara Sinta Limbong</h3>
+        <p class="title">ANGGOTA TIM PROGRAM</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/rahkmadsyah-irawan.jpg" alt="rahkmadsyah-irawan" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Rahkmadsyah Irawan</h3>
+        <p class="title">ANGGOTA TIM PROGRAM</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/hanna-pati-lopian.jpg" alt="hanna-pati-lopian" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Hanna Pati Lopian</h3>
+        <p class="title">KETUA TIM QUALITY ASSURANCE</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/rachel-sagita-sibarani.jpg" alt="rachel-sagita-sibarani" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Rachel Sagita Sibarani</h3>
+        <p class="title">ANGGOTA TIM QUALITY ASSURANCE</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/shindy-aprilia.jpg" alt="shindy-aprilia" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Sindy Aprilia</h3>
+        <p class="title">ANGGOTA TIM QUALITY ASSURANCE</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="opsi6">
+    <h1 style="color: #4fb2d9;"><b>DIVISI BUSINESS DEVELOPMENT</b></h1>
+    <hr class="garis-tebal">
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/riah-ulina-hutasoit.jpg" alt="riah-ulina-hutasoit" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Riah Ulina Hutasoit</h3>
+        <p class="title">KEPALA DIVISI BUSSINES DEVELOPMENT</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/putri-anggreini.jpg" alt="putri-anggreini" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Putri Anggreini</h3>
+        <p class="title">MANAGER</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="profile-card">
+        <img src="foto/hepyana-daulay.jpg" alt="hepyana-daulay" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Hepyana Daulay</h3>
+        <p class="title">KETUA TIM PRODUCEY DEVELOPMENT</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/fensia-emanuela.jpg" alt="fensia-emanuela" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Fensia Emanuela</h3>
+        <p class="title">ANGGOTA TIM PRODUKEY DEVELOPMENT</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/kyla-hulwani.jpg" alt="kyla-hulwani" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Kyla Hulwani</h3>
+        <p class="title">ANGGOTA TIM PRODUKEY DEVELOPMENT</p>
+      </div>
+
+      <div class="profile-card">
+        <img src="foto/musbar-muliansyah.jpg" alt="musbar-muliansyah" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+        <h3>Musbar Muliansyah</h3>
+        <p class="title">ANGGOTA TIM PRODUKEY DEVELOPMENT</p>
+      </div>
+
+      <div class="container">
+        <div class="profile-card">
+          <img src="foto/yohana-fransiska.jpg" alt="yohana-fransiska" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+          <h3>Yohana Fransiska</h3>
+          <p class="title">KETUA TIM SALES</p>
+        </div>
+
+        <div class="profile-card">
+          <img src="foto/nabila-azzahro.jpg" alt="nabila-azzahro" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+          <h3>Nabila Azzahro</h3>
+          <p class="title">ANGGOTA TIM SALES</p>
+        </div>
+        <div class="profile-card">
+          <img src="foto/nurul-inayah.jpg" alt="nurul-inayah" style="border-radius:15px 25px 0 0;
+        box-shadow:0px 0px 15px -2px rgba(0,0,0,0.4);">
+          <h3>Nurul Inayah</h3>
+          <p class="title">ANGGOTA TIM SALES</p>
+        </div>
+      </div>
+  </section>
+  <div class="container mt-4">
+    <hr>
+
+    <?php foreach ($per_divisi as $divisi => $items): ?>
+
+      <div class="division-title text-center"><?= strtoupper($divisi) ?></div>
+
+      <div class="row justify-content-center">
+
+        <?php foreach ($items as $kab): ?>
+          <div class="col-md-3">
+            <div class="profile-card">
+              <img src="uploads/kabinet/<?= $kab['foto'] ?>" alt="<?= htmlspecialchars($kab['nama']) ?>">
+              <h5 class="mt-2"><?= htmlspecialchars($kab['nama']) ?></h5>
+              <p class="text-muted mb-1"><?= htmlspecialchars($kab['jabatan']) ?></p>
+            </div>
+          </div>
+        <?php endforeach; ?>
+
+      </div>
+
+    <?php endforeach; ?>
+
+  </div>
 
 
-          <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"></script>
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-            integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-            crossorigin="anonymous"></script>
-          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-            crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+    integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 
 </body>
 

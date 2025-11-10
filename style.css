@@ -1,0 +1,347 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #ffffff;
+    overflow-x: hidden;
+}
+
+section,
+.container {
+    scroll-margin-top: 70px;
+}
+
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 12px 20px;
+}
+
+.navbar-brand img {
+    height: 70px;
+    margin-right: 12px;
+    transition: 0.3s ease;
+}
+
+.navbar-brand img:hover {
+    transform: scale(1.05);
+}
+
+.navbar-brand strong {
+    font-size: 22px;
+    color: #333;
+    letter-spacing: 1px;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    color: #333 !important;
+    margin-left: 18px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff !important;
+}
+
+@media (min-width: 992px) {
+    .navbar .dropdown:hover .dropdown-menu {
+        display: block;
+        margin-top: 0;
+    }
+
+    .dropdown-menu {
+        animation: fadeIn 0.3s ease;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .navbar-brand img { height: 55px; }
+    .navbar-brand strong { font-size: 18px; }
+    .navbar-nav .nav-link { font-size: 13px; margin-left: 10px; }
+}
+
+@media (max-width: 480px) {
+    .navbar-brand img { height: 40px; }
+    .navbar-brand strong { font-size: 16px; }
+    .navbar-nav .nav-link { font-size: 12px; margin-left: 6px; }
+}
+
+.hero {
+    background-image: url('logo/baground.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.hero p {
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .hero { background-attachment: scroll; }
+    .hero h1 { font-size: 2rem; }
+    .hero p  { font-size: 1.2rem; }
+}
+
+.menu-section {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.menu-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.menu-card {
+    width: 200px;
+    background: white;
+    border-radius: 20px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.menu-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.menu-card:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.custom-container {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 315px;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .video-container iframe { height: 200px; }
+}
+
+.share-bar {
+    position: fixed;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10000;
+}
+
+.share-item {
+    width: 48px;
+    height: 48px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: .2s;
+}
+
+.share-item:hover { transform: scale(1.1); }
+
+.ig { background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5); }
+.tt { background: #000; }
+.yt { background: #FF0000; }
+.net { background: #0078d7; }
+
+.gallery-item {
+    position: relative;
+}
+
+.gallery-item img {
+    transition: 0.3s;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.gallery-title {
+    position: absolute;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    width: 100%;
+    padding: 5px;
+    color: white;
+}
+
+.profile-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    width: 200px;
+    padding: 20px;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.profile-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+}
+
+.profile-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.sejarah-section {
+    background-color: #f1f1f1;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.sejarah-header {
+    color: #0078d7;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.sejarah-text {
+    color: #343a40;
+    font-size: 1.1rem;
+}
+
+.visi-misi {
+    background: #ffffff;
+    padding: 60px 20px;
+    max-width: 1000px;
+    margin: auto;
+    text-align: left;
+}
+
+.visi-misi h2 {
+    text-align: center;
+    color: #0078d7;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.visi-box, .misi-box {
+    background: #f9f9f9;
+    border-left: 6px solid #0078d7;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.08);
+}
+
+.misi-list li {
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+    color: #444;
+}
+
+.struktur-section {
+    background: #f1f1f1;
+    padding: 40px 20px;
+}
+
+.struktur-section h2 {
+    text-align: center;
+    color: #0078d7;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.struktur-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.struktur-card {
+    background: white;
+    width: 230px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    transition: .3s;
+    text-align: center;
+}
+
+.struktur-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.struktur-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.struktur-card h3 {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.struktur-card p {
+    color: #777;
+    font-size: 14px;
+}

@@ -1,3 +1,10 @@
+<?php
+require_once "config.php";
+require_once "model/galeri.php";
+
+// Ambil semua berita dari database
+$berita = berita_index();
+?>
 <!DOCTYPE html>
 <html lang="id">
 
@@ -6,337 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BERITA HMPS MANAJEMEN INFORMATIKA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: "Poppins", sans-serif;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        .gallery-container {
-            max-width: 1100px;
-            margin: 50px auto;
-            padding: 0 15px;
-        }
-
-        .gallery-card {
-            border: none;
-            border-radius: 12px;
-            background: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            transition: 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-        }
-
-        .gallery-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .gallery-card img,
-        .gallery-card .slideshow img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            display: block;
-        }
-
-        /* Navbar */
-        .navbar {
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            padding: 12px 20px;
-        }
-
-        .navbar-brand img {
-            height: 70px;
-            margin-right: 12px;
-            transition: 0.3s ease;
-        }
-
-        .navbar-brand img:hover {
-            transform: scale(1.05);
-        }
-
-        .navbar-brand strong {
-            font-size: 22px;
-            color: #333;
-            letter-spacing: 1px;
-        }
-
-        .navbar-nav .nav-link {
-            font-weight: 500;
-            color: #333 !important;
-            margin-left: 18px;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: #007bff !important;
-        }
-
-        /* === DROPDOWN ON HOVER === */
-        @media (min-width: 992px) {
-            .navbar .dropdown:hover .dropdown-menu {
-                display: block;
-                margin-top: 0;
-            }
-
-            .dropdown-menu {
-                animation: fadeIn 0.3s ease;
-            }
-
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(10px);
-                }
-
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-        }
-
-        @media (max-width: 768px) {
-            .navbar-brand img {
-                height: 55px;
-            }
-
-            .navbar-brand strong {
-                font-size: 18px;
-            }
-        }
-
-        .custom-container {
-            background-color: #f0f0f0;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .video-container iframe {
-            width: 100%;
-            height: 315px;
-            border: none;
-        }
-
-
-        .card-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 15px;
-        }
-
-        .card-text {
-            font-size: 15px;
-            text-align: justify;
-            color: #333;
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .selengkapnya {
-            color: #007bff;
-            cursor: pointer;
-            font-weight: 500;
-            text-decoration: none;
-            transition: 0.2s;
-            font-size: 14px;
-        }
-
-        .selengkapnya:hover {
-            text-decoration: underline;
-            color: #0056b3;
-        }
-
-        .card-date {
-            text-align: center;
-            font-style: italic;
-            color: #555;
-            font-weight: 600;
-            margin-top: 10px;
-        }
-
-        /* slideshow */
-        .slideshow {
-            position: relative;
-            overflow: hidden;
-            height: 200px;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }
-
-        .slideshow img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-
-        .slideshow img.active {
-            opacity: 1;
-        }
-
-        /* Modal */
-        .modal-dialog {
-            max-width: 700px;
-        }
-
-        .modal-content {
-            border-radius: 12px;
-            overflow: hidden;
-            background: #fff;
-            position: relative;
-        }
-
-        .modal-body {
-            padding: 10px;
-            text-align: center;
-            position: relative;
-        }
-
-        .modal-body img {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 10px;
-            margin: 15px auto;
-        }
-
-        .modal-text {
-            padding: 20px;
-            text-align: left;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: none;
-            border-radius: 50%;
-            font-size: 22px;
-            line-height: 1;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-
-        .close-btn:hover {
-            transform: scale(1.08);
-        }
-
-        /* Panah hitam biasa */
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-image: none;
-        }
-
-        .carousel-control-prev::before {
-            content: "◀";
-            color: black;
-            font-size: 2rem;
-        }
-
-        .carousel-control-next::before {
-            content: "▶";
-            color: black;
-            font-size: 2rem;
-        }
-
-        .carousel-control-prev,
-        .carousel-control-next {
-            width: 8%;
-        }
-
-        @media (max-width: 768px) {
-            .gallery-card img {
-                height: 160px;
-            }
-
-            .slideshow {
-                height: 160px;
-            }
-
-            .modal-body img {
-                max-width: 80%;
-            }
-        }
-
-        /* === SHARE BAR === */
-        .share-bar {
-            position: fixed;
-            top: 50%;
-            left: 8px;
-            transform: translateY(-50%);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 10000;
-            user-select: none;
-        }
-
-        .share-item {
-            width: 48px;
-            height: 48px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
-            transition: transform .2s;
-        }
-
-        .share-item:hover {
-            transform: scale(1.1);
-        }
-
-        .ig {
-            background: radial-gradient(circle at 30% 30%, #feda75, #d62976, #962fbf, #4f5bd5);
-        }
-
-        .tt {
-            background: #000;
-        }
-
-        .yt {
-            background: #FF0000;
-        }
-
-        .net {
-            background: #0078d7;
-        }
-
-        .share-item svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
-</head>
-
-<body>
     <!-- === NAVBAR === -->
     <nav class="navbar navbar-expand-lg sticky-top" id="navbarTop">
         <div class="container">
@@ -362,7 +40,7 @@
                     <li class="nav-item dropdown active">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="color: #000;"><b>Galeri</b></a>
                         <ul class="dropdown-menu active">
-                            <li><a class="dropdown-item" href="foto.php">Kegiatan</a></li>
+                            <li><a class="dropdown-item" href="kegiatan.php">Kegiatan</a></li>
                             <li><a class="dropdown-item" href="berita.php">Berita</a></li>
                         </ul>
                     </li>
@@ -406,196 +84,196 @@
             </svg>
         </a>
     </nav>
-            <div class="gallery-container">
-                <div class="row g-4">
+    <div class="gallery-container">
+        <div class="row g-4">
 
-                    <!-- KEGIATAN 1 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal1">
-                            <img src="galeri/open-donasi.jpg" alt="Kegiatan 1">
-                            <div class="card-body">
-                                <p class="card-text">✨ MI CARE & SHARE 🤝 | OPEN DONASI ✨ Bersama kita tebarkan kepedulian untuk sesama 💛</p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal1">Selengkapnya</span>
-                                <p class="card-date">-07 November 2025-</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 1 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal1">
+                    <img src="galeri/open-donasi.jpg" alt="Kegiatan 1">
+                    <div class="card-body">
+                        <p class="card-text">✨ MI CARE & SHARE 🤝 | OPEN DONASI ✨ Bersama kita tebarkan kepedulian untuk sesama 💛</p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal1">Selengkapnya</span>
+                        <p class="card-date">-07 November 2025-</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 2 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal2">
-                            <div class="slideshow">
-                                <img src="galeri/pendaftaran-festara.jpg" class="active" alt="Kegiatan 2 - 1">
-                                <img src="galeri/pendaftaran-festara-1.jpg" alt="Kegiatan 2 - 2">
-                                <img src="galeri/pendaftaran-festara-2.jpg" alt="Kegiatan 2 - 3">
-                                <img src="galeri/pendaftaran-festara-3.jpg" alt="Kegiatan 2 - 4">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">🔥 PENDAFTARAN FESTARA 2025 RESMI DIBUKA!
-                                    Saatnya unjuk bakat dan buktikan kemampuanmu!
-                                    Dari lapangan sampai panggung, dari strategi sampai seni, semua punya ruang untuk bersinar di sini. ✨
-                                </p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal2">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 2 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal2">
+                    <div class="slideshow">
+                        <img src="galeri/pendaftaran-festara.jpg" class="active" alt="Kegiatan 2 - 1">
+                        <img src="galeri/pendaftaran-festara-1.jpg" alt="Kegiatan 2 - 2">
+                        <img src="galeri/pendaftaran-festara-2.jpg" alt="Kegiatan 2 - 3">
+                        <img src="galeri/pendaftaran-festara-3.jpg" alt="Kegiatan 2 - 4">
                     </div>
+                    <div class="card-body">
+                        <p class="card-text">🔥 PENDAFTARAN FESTARA 2025 RESMI DIBUKA!
+                            Saatnya unjuk bakat dan buktikan kemampuanmu!
+                            Dari lapangan sampai panggung, dari strategi sampai seni, semua punya ruang untuk bersinar di sini. ✨
+                        </p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal2">Selengkapnya</span>
+                        <p class="card-date">--</p>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 3-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal3">
-                            <div class="slideshow">
-                                <img src="galeri/talkshow-linkedin.jpg" class="active" alt="Kegiatan 3 - 1">
-                                <img src="galeri/talkshow-linkendin-1.jpg" alt="Kegiatan 3 - 2">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">🚀 Talkshow LinkedIn Talks: Membangun Jaringan Profesional Melalui LinkedIn
-                                    Yuk tingkatkan personal branding dan perluas relasi kariermu bersama kami!
-                                    Dapatkan insight seputar dunia LinkedIn, strategi profil profesional, hingga peluang kerja di era digital 🌐
-                                </p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal3">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 3-->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal3">
+                    <div class="slideshow">
+                        <img src="galeri/talkshow-linkedin.jpg" class="active" alt="Kegiatan 3 - 1">
+                        <img src="galeri/talkshow-linkendin-1.jpg" alt="Kegiatan 3 - 2">
                     </div>
+                    <div class="card-body">
+                        <p class="card-text">🚀 Talkshow LinkedIn Talks: Membangun Jaringan Profesional Melalui LinkedIn
+                            Yuk tingkatkan personal branding dan perluas relasi kariermu bersama kami!
+                            Dapatkan insight seputar dunia LinkedIn, strategi profil profesional, hingga peluang kerja di era digital 🌐
+                        </p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal3">Selengkapnya</span>
+                        <p class="card-date">--</p>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 4 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal4">
-                            <img src="galeri/pelantikan-koordinator.jpg" alt="Kegiatan 4">
-                            <div class="card-body">
-                                <p class="card-text">Selamat dan Sukses dalam Mengemban Amanah Baru! 🌟
-                                    Kabinet Evolutionnaire HMPS MI 2024/2025 dengan bangga mengucapkan SELAMAT DAN SUKSES atas pelantikan:
-                                </p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal4">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 4 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal4">
+                    <img src="galeri/pelantikan-koordinator.jpg" alt="Kegiatan 4">
+                    <div class="card-body">
+                        <p class="card-text">Selamat dan Sukses dalam Mengemban Amanah Baru! 🌟
+                            Kabinet Evolutionnaire HMPS MI 2024/2025 dengan bangga mengucapkan SELAMAT DAN SUKSES atas pelantikan:
+                        </p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal4">Selengkapnya</span>
+                        <p class="card-date">--</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 5 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal5">
-                            <img src="galeri/pelantikan-ketua-jurusan.jpg" alt="Kegiatan 5">
-                            <div class="card-body">
-                                <p class="card-text">Selamat dan Sukses! Kabinet Evolutionnaire HMPS MI 2024/2025 mengucapkan selamat atas Pelantikan Ketua dan Sekretaris Jurusan Teknik Komputer dan Informatika Politeknik Negeri Medan untuk Periode 2025-2029. 🎊</p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal5">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 5 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal5">
+                    <img src="galeri/pelantikan-ketua-jurusan.jpg" alt="Kegiatan 5">
+                    <div class="card-body">
+                        <p class="card-text">Selamat dan Sukses! Kabinet Evolutionnaire HMPS MI 2024/2025 mengucapkan selamat atas Pelantikan Ketua dan Sekretaris Jurusan Teknik Komputer dan Informatika Politeknik Negeri Medan untuk Periode 2025-2029. 🎊</p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal5">Selengkapnya</span>
+                        <p class="card-date">--</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 6 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal6">
-                            <img src="galeri/ketua-jurusan-selesai.jpg" alt="Kegiatan 6">
-                            <div class="card-body">
-                                <p class="card-text">Kabinet Evolutionnaire HMPS MI 2024/2025 mengucapkan TERIMA KASIH yang tulus atas dedikasi, bimbingan, dan dukungan luar biasa yang telah diberikan selama masa kepemimpinan:</p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal6">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 6 -->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal6">
+                    <img src="galeri/ketua-jurusan-selesai.jpg" alt="Kegiatan 6">
+                    <div class="card-body">
+                        <p class="card-text">Kabinet Evolutionnaire HMPS MI 2024/2025 mengucapkan TERIMA KASIH yang tulus atas dedikasi, bimbingan, dan dukungan luar biasa yang telah diberikan selama masa kepemimpinan:</p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal6">Selengkapnya</span>
+                        <p class="card-date">--</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN  7-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal7">
-                            <img src="galeri/koordinator-selesai.jpg" alt="Kegiatan 7">
-                            <div class="card-body">
-                                <p class="card-text">Terima Kasih Atas Dedikasi dan Bimbingan yang Tak Ternilai! 🙏</p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal7">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN  7-->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal7">
+                    <img src="galeri/koordinator-selesai.jpg" alt="Kegiatan 7">
+                    <div class="card-body">
+                        <p class="card-text">Terima Kasih Atas Dedikasi dan Bimbingan yang Tak Ternilai! 🙏</p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal7">Selengkapnya</span>
+                        <p class="card-date">--</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 8-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal8">
-                            <div class="slideshow">
-                                <img src="galeri/pendaftaran-coding.jpg" class="active" alt="Kegiatan 8 - 1">
-                                <img src="galeri/pendaftaran-coding-1.jpg" alt="Kegiatan 8 - 2">
-                                <img src="galeri/pendaftaran-coding-2.jpg" alt="Kegiatan 8 - 3">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">[PENDAFTARAN CODING CLASS BY CODIFY ACADEMY]</p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal8">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 8-->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal8">
+                    <div class="slideshow">
+                        <img src="galeri/pendaftaran-coding.jpg" class="active" alt="Kegiatan 8 - 1">
+                        <img src="galeri/pendaftaran-coding-1.jpg" alt="Kegiatan 8 - 2">
+                        <img src="galeri/pendaftaran-coding-2.jpg" alt="Kegiatan 8 - 3">
                     </div>
+                    <div class="card-body">
+                        <p class="card-text">[PENDAFTARAN CODING CLASS BY CODIFY ACADEMY]</p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal8">Selengkapnya</span>
+                        <p class="card-date">--</p>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN  9-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal9">
-                            <img src="galeri/gelar-hmps.jpg" alt="Kegiatan 9">
-                            <div class="card-body">
-                                <p class="card-text">💙 Sebuah kebanggaan dan rasa syukur yang mendalam kami sampaikan atas pencapaian luar biasa ini.</p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal9">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN  9-->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal9">
+                    <img src="galeri/gelar-hmps.jpg" alt="Kegiatan 9">
+                    <div class="card-body">
+                        <p class="card-text">💙 Sebuah kebanggaan dan rasa syukur yang mendalam kami sampaikan atas pencapaian luar biasa ini.</p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal9">Selengkapnya</span>
+                        <p class="card-date">--</p>
                     </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 10-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal10">
-                            <div class="slideshow">
-                                <img src="galeri/opendonasi.jpg" class="active" alt="Kegiatan 10 - 1">
-                                <img src="galeri/opendonasi-1.jpg" alt="Kegiatan 10 - 2">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">🌟 [OPEN DONASI] 🌟
-                                    Assalamualaikum Warahmatullahi Wabarakatuh.
-                                    Hidup tak selalu tentang seberapa banyak yang kita punya, tapi seberapa tulus kita berbagi. Di tengah lelahnya rutinitas, jangan lupa sisihkan sedikit untuk mereka yang membutuhkan. Karena setiap kebaikan, sekecil apapun, akan kembali menjadi kemudahan di setiap urusan kita 🤍
-                                </p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal10">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 10-->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal10">
+                    <div class="slideshow">
+                        <img src="galeri/opendonasi.jpg" class="active" alt="Kegiatan 10 - 1">
+                        <img src="galeri/opendonasi-1.jpg" alt="Kegiatan 10 - 2">
                     </div>
+                    <div class="card-body">
+                        <p class="card-text">🌟 [OPEN DONASI] 🌟
+                            Assalamualaikum Warahmatullahi Wabarakatuh.
+                            Hidup tak selalu tentang seberapa banyak yang kita punya, tapi seberapa tulus kita berbagi. Di tengah lelahnya rutinitas, jangan lupa sisihkan sedikit untuk mereka yang membutuhkan. Karena setiap kebaikan, sekecil apapun, akan kembali menjadi kemudahan di setiap urusan kita 🤍
+                        </p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal10">Selengkapnya</span>
+                        <p class="card-date">--</p>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 11-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal11">
-                            <div class="slideshow">
-                                <img src="galeri/recrutment.jpg" class="active" alt="Kegiatan 11 - 1">
-                                <img src="galeri/recrutment-1.jpg" alt="Kegiatan 11 - 2">
-                                <img src="galeri/recrutment-2.jpg" alt="Kegiatan 11 - 3">
-                                <img src="galeri/recrutment-3.jpg" alt="Kegiatan 11 - 4">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Halo MI !!!!
-                                    Inilah kesempatanmu untuk membuat perubahan nyata!
-                                    Apakah kamu memiliki semangat untuk memimpin dan berkontribusi dalam organisasi mahasiswa yang aktif dan solid?
-                                </p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal11">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 11-->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal11">
+                    <div class="slideshow">
+                        <img src="galeri/recrutment.jpg" class="active" alt="Kegiatan 11 - 1">
+                        <img src="galeri/recrutment-1.jpg" alt="Kegiatan 11 - 2">
+                        <img src="galeri/recrutment-2.jpg" alt="Kegiatan 11 - 3">
+                        <img src="galeri/recrutment-3.jpg" alt="Kegiatan 11 - 4">
                     </div>
+                    <div class="card-body">
+                        <p class="card-text">Halo MI !!!!
+                            Inilah kesempatanmu untuk membuat perubahan nyata!
+                            Apakah kamu memiliki semangat untuk memimpin dan berkontribusi dalam organisasi mahasiswa yang aktif dan solid?
+                        </p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal11">Selengkapnya</span>
+                        <p class="card-date">--</p>
+                    </div>
+                </div>
+            </div>
 
-                    <!-- KEGIATAN 12-->
-                    <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
-                        <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal12">
-                            <div class="slideshow">
-                                <img src="galeri/strategi.jpg" class="active" alt="Kegiatan 12 - 1">
-                                <img src="galeri/strategi-1.jpg" alt="Kegiatan 12 - 2">
-                                <img src="galeri/strategi-2.jpg" alt="Kegiatan 12 - 3">
-                                <img src="galeri/strategi-3.jpg" alt="Kegiatan 12 - 4">
-                                <img src="galeri/strategi-4.jpg" alt="Kegiatan 12 - 5">
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Kuis mendadak sering kali menjadi momen yang menegangkan bagi mahasiswa.
-                                    Namun, di balik rasa gugup itu, tersimpan peluang untuk melatih ketenangan dan kemampuan berpikir kritis.
-                                    Tiga strategi adaptif berikut dapat membantu kamu tetap fokus dan percaya diri dalam situasi
-                                    yang tidak terduga. Sebab, mahasiswa yang tangguh bukan berarti selalu siap, tetapi mampu beradaptasi kapan pun dibutuhkan.
-                                </p>
-                                <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal12">Selengkapnya</span>
-                                <p class="card-date">--</p>
-                            </div>
-                        </div>
+            <!-- KEGIATAN 12-->
+            <div class="col-lg-3 col-md-4 col-sm-6 d-flex">
+                <div class="card gallery-card w-100" data-bs-toggle="modal" data-bs-target="#modal12">
+                    <div class="slideshow">
+                        <img src="galeri/strategi.jpg" class="active" alt="Kegiatan 12 - 1">
+                        <img src="galeri/strategi-1.jpg" alt="Kegiatan 12 - 2">
+                        <img src="galeri/strategi-2.jpg" alt="Kegiatan 12 - 3">
+                        <img src="galeri/strategi-3.jpg" alt="Kegiatan 12 - 4">
+                        <img src="galeri/strategi-4.jpg" alt="Kegiatan 12 - 5">
                     </div>
+                    <div class="card-body">
+                        <p class="card-text">Kuis mendadak sering kali menjadi momen yang menegangkan bagi mahasiswa.
+                            Namun, di balik rasa gugup itu, tersimpan peluang untuk melatih ketenangan dan kemampuan berpikir kritis.
+                            Tiga strategi adaptif berikut dapat membantu kamu tetap fokus dan percaya diri dalam situasi
+                            yang tidak terduga. Sebab, mahasiswa yang tangguh bukan berarti selalu siap, tetapi mampu beradaptasi kapan pun dibutuhkan.
+                        </p>
+                        <span class="selengkapnya" data-bs-toggle="modal" data-bs-target="#modal12">Selengkapnya</span>
+                        <p class="card-date">--</p>
+                    </div>
+                </div>
+            </div>
 
 
             <!-- MODAL 1 -->
@@ -1135,9 +813,47 @@
                     </div>
                 </div>
             </div>
+            <?php include "navbar.php"; ?>
+
+            <div class="container mt-5">
+                <div class="row g-4">
+
+                    <?php foreach ($berita as $row): ?>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="card h-100 shadow-sm">
+
+                                <!-- GAMBAR -->
+                                <?php if (!empty($row['gambar'])): ?>
+                                    <img src="uploads/<?= $row['gambar'] ?>" class="card-img-top" style="height:230px; object-fit:cover;">
+                                <?php else: ?>
+                                    <img src="assets/default.jpg" class="card-img-top" style="height:230px; object-fit:cover;">
+                                <?php endif; ?>
+
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title"><?= htmlspecialchars($row['judul']) ?></h5>
+
+                                    <p class="card-text" style="flex:1;">
+                                        <?= substr(strip_tags($row['isi']), 0, 120) ?>...
+                                    </p>
+
+                                    <a href="detail_berita.php?id=<?= $row['id'] ?>"
+                                        class="btn btn-primary mt-auto">
+                                        Selengkapnya
+                                    </a>
+                                </div>
+
+                                <div class="card-footer text-muted text-center">
+                                    <?= date("d M Y", strtotime($row['tanggal'])) ?>
+                                </div>
+
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+
+                </div>
+            </div>
 
 
-            
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
             <script>
@@ -1163,34 +879,35 @@
                     });
                 });
             </script>
-            
 
-</body>
-<footer style="background-color: #0078d7;" class="text-white pt-4 pb-3">
-    <div class="container">
-      <div class="row align-items-center text-center text-md-start">
-        <!-- BAGIAN KIRI: LOGO -->
-        <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center justify-content-md-start flex-wrap gap-3">
-          <img src="logo/LOGO POLMED.png" alt="Logo Polmed" class="img-fluid" style="max-width: 90px;">
-          <img src="logo/LOGO PROGRAM STUDI MI.png" alt="Logo Prodi MI" class="img-fluid" style="max-width: 90px;">
-          <img src="logo/LOGO HIMPUNAN PROGRAM STUDI MANAJEMEN INFORMATIKA.png" alt="Logo HMPS MI" class="img-fluid" style="max-width: 90px;">
-        </div>
 
-        <!-- BAGIAN KANAN: TEKS -->
-        <div class="col-md-6 text-center text-md-end">
-          <h6 class="fw-bold mb-1">Official Account</h6>
-          <p class="mb-0">HMPS Manajemen Informatika</p>
-          <p class="mb-0">Politeknik Negeri Medan</p>
-          <p class="mb-0">Jl. Almamater No.1 Gedung N Lt.2</p>
-          <p class="mb-0">Politeknik Negeri Medan</p>
-        </div>
-      </div>
+            </body>
+            <footer style="background-color: #0078d7;" class="text-white pt-4 pb-3">
+                <div class="container">
+                    <div class="row align-items-center text-center text-md-start">
+                        <!-- BAGIAN KIRI: LOGO -->
+                        <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center justify-content-md-start flex-wrap gap-3">
+                            <img src="logo/LOGO POLMED.png" alt="Logo Polmed" class="img-fluid" style="max-width: 90px;">
+                            <img src="logo/LOGO PROGRAM STUDI MI.png" alt="Logo Prodi MI" class="img-fluid" style="max-width: 90px;">
+                            <img src="logo/LOGO HIMPUNAN PROGRAM STUDI MANAJEMEN INFORMATIKA.png" alt="Logo HMPS MI" class="img-fluid" style="max-width: 90px;">
+                        </div>
 
-      <hr class="border-light mt-4 mb-3">
+                        <!-- BAGIAN KANAN: TEKS -->
+                        <div class="col-md-6 text-center text-md-end">
+                            <h6 class="fw-bold mb-1">Official Account</h6>
+                            <p class="mb-0">HMPS Manajemen Informatika</p>
+                            <p class="mb-0">Politeknik Negeri Medan</p>
+                            <p class="mb-0">Jl. Almamater No.1 Gedung N Lt.2</p>
+                            <p class="mb-0">Politeknik Negeri Medan</p>
+                        </div>
+                    </div>
 
-      <div class="text-center small">
-        &copy; 2025 Himpunan Mahasiswa Program Studi Manajemen Informatika - POLMED
-      </div>
-    </div>
-  </footer>
+                    <hr class="border-light mt-4 mb-3">
+
+                    <div class="text-center small">
+                        &copy; 2025 Himpunan Mahasiswa Program Studi Manajemen Informatika - POLMED
+                    </div>
+                </div>
+            </footer>
+
 </html>
