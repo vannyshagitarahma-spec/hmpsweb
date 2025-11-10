@@ -1,7 +1,7 @@
 <?php
 require_once "config.php";
 
-function kegiatan_index() {
+function kegiatan_all() {
     global $conn;
     $sql = "SELECT * FROM kegiatan ORDER BY id DESC";
     return $conn->query($sql);
@@ -15,14 +15,14 @@ function kegiatan_detail($id) {
     return $stmt->get_result()->fetch_assoc();
 }
 
-function kegiatan_create($judul, $isi, $gambar) {
+function kegiatan_tambah($judul, $isi, $gambar) {
     global $conn;
     $stmt = $conn->prepare("INSERT INTO kegiatan (judul, isi, gambar) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $judul, $isi, $gambar);
     return $stmt->execute();
 }
 
-function kegiatan_update($id, $judul, $isi, $gambar = null) {
+function kegiatan_edit($id, $judul, $isi, $gambar = null) {
     global $conn;
 
     if ($gambar) {
@@ -36,7 +36,7 @@ function kegiatan_update($id, $judul, $isi, $gambar = null) {
     return $stmt->execute();
 }
 
-function kegiatan_delete($id) {
+function kegiatan_hapus($id) {
     global $conn;
     $stmt = $conn->prepare("DELETE FROM kegiatan WHERE id = ?");
     $stmt->bind_param("i", $id);

@@ -1,7 +1,7 @@
 <?php
 require_once "config.php";
 
-function kabinet_index() {
+function kabinet_all() {
     global $conn;
     $sql = "SELECT * FROM kabinet ORDER BY posisi ASC";
     return $conn->query($sql);
@@ -15,14 +15,14 @@ function kabinet_detail($id) {
     return $stmt->get_result()->fetch_assoc();
 }
 
-function kabinet_create($nama, $jabatan, $gambar) {
+function kabinet_tambah($nama, $jabatan, $gambar) {
     global $conn;
     $stmt = $conn->prepare("INSERT INTO kabinet (nama, jabatan, gambar) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $nama, $jabatan, $gambar);
     return $stmt->execute();
 }
 
-function kabinet_update($id, $nama, $jabatan, $gambar = null) {
+function kabinet_edit($id, $nama, $jabatan, $gambar = null) {
     global $conn;
 
     if ($gambar) {
@@ -36,7 +36,7 @@ function kabinet_update($id, $nama, $jabatan, $gambar = null) {
     return $stmt->execute();
 }
 
-function kabinet_delete($id) {
+function kabinet_hapus($id) {
     global $conn;
     $stmt = $conn->prepare("DELETE FROM kabinet WHERE id=?");
     $stmt->bind_param("i", $id);

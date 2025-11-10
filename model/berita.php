@@ -9,16 +9,14 @@ function berita_index() {
 }
 
 /* Ambil 1 berita berdasarkan ID */
-function berita_detail($id) {
-    global $conn;
-    $stmt = $conn->prepare("SELECT * FROM berita WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    return $stmt->get_result()->fetch_assoc();
+function berita_all() {
+    global $koneksi;
+    $result = $koneksi->query("SELECT * FROM berita ORDER BY id DESC");
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
 
 /* Tambah berita */
-function berita_create($judul, $isi, $gambar) {
+function berita_tambah($judul, $isi, $gambar) {
     global $conn;
     $stmt = $conn->prepare("INSERT INTO berita (judul, isi, gambar) VALUES (?, ?, ?)");
     $stmt->bind_param("sss", $judul, $isi, $gambar);
@@ -26,7 +24,7 @@ function berita_create($judul, $isi, $gambar) {
 }
 
 /* Update */
-function berita_update($id, $judul, $isi, $gambar = null) {
+function berita_edit($id, $judul, $isi, $gambar = null) {
     global $conn;
 
     if ($gambar) {
@@ -41,7 +39,7 @@ function berita_update($id, $judul, $isi, $gambar = null) {
 }
 
 /* Hapus */
-function berita_delete($id) {
+function berita_hapus($id) {
     global $conn;
     $stmt = $conn->prepare("DELETE FROM berita WHERE id = ?");
     $stmt->bind_param("i", $id);

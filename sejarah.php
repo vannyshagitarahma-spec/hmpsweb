@@ -3,7 +3,7 @@ session_start();
 require_once "config.php";
 require_once "model/sejarah.php";
 
-$sejarah = sejarah_get();
+$sejarah = sejarah_all();
 
 ?>
 
@@ -82,7 +82,11 @@ $sejarah = sejarah_get();
         </div>
     </div>
     <div class="sejarah-text">
-        <?= nl2br(htmlspecialchars($sejarah['isi'])) ?>
+        <?php if (!empty($sejarah['isi'])): ?>
+            <?php echo nl2br(htmlspecialchars($sejarah_all['isi'])); ?>
+        <?php else: ?>
+            <p><i>Belum ada data sejarah.</i></p>
+        <?php endif; ?>
     </div>
 
     <p></p>
